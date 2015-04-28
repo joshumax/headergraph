@@ -3,7 +3,7 @@ HeaderGraph
 
 It graphs C/C++ headers n' stuff.
 
-HeaderGraph can be used to graph header dependancies for small and large-scale C/C++ projects.
+HeaderGraph can be used to graph header dependencies for small and large-scale C/C++ projects.
 It is especially useful when porting programs to other operating systems, among other uses.
 
 **Example:**
