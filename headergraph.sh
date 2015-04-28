@@ -71,7 +71,7 @@ while getopts ":l:I:" o; do
             get_headers ${OPTARG}
             ;;
         I)
-            include_paths=("${include_paths[@]}" "${OPTARG}")
+            include_paths=("${OPTARG}" "${include_paths[@]}")
             ;;
         *)
             usage
