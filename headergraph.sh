@@ -18,13 +18,13 @@ find_header_depends() {
 	includefile=$(echo $parsedline | grep -o "[A-Za-z0-9\._\-\\\/]*")
         if [[ ${parsedline:0:1} = "<" ]]; then
             # Relative include
-            get_headers $includefile $1
+            get_headers $includefile $1 false
         else
             # Absolute include
             if [[ $includefile = /* ]]; then
-                get_headers $includefile $1
+                get_headers $includefile $1 true
             else
-                get_headers $(basename $1)"/"$includefile $1
+                get_headers $(basename $1)"/"$includefile $1 true
             fi
         fi
     done < <(grep -o "^\ *#\ *include\ *[\"'<][A-Za-z0-9\._\-\\\/]*[\"'>]" $1)
@@ -33,7 +33,7 @@ find_header_depends() {
 get_headers() {
     statok=false
     hdr=$1
-    if [[ $hdr = /* ]]; then
+    if [[ $2 = true ]]; then
         # Absolute directory
         if [[ -f $hdr ]]; then
             statok=true
