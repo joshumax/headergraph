@@ -6,6 +6,11 @@ include_paths=("/include" "/usr/local/include" "/usr/include")
 analyzed_files=()
 graph_gen=""
 find_header_depends() {
+    if [[ $2 == "" ]]; then
+        graph_gen=$graph_gen"\"Header Graph\" -> ""\"$1\""";\n"
+    else
+        graph_gen=$graph_gen"\"$2\""" -> ""\"$1\""";\n"
+    fi
     for e in "${analyzed_files[@]}"; do [[ $e == $1 ]] && return; done
     analyzed_files=("${analyzed_files[@]}" "$1") # Prevent recursion
     while read line; do
@@ -23,11 +28,6 @@ find_header_depends() {
             fi
         fi
     done < <(grep -o "^\ *#\ *include\ *[\"'<][A-Za-z0-9\._\-\\\/]*[\"'>]" $1)
-    if [[ $2 == "" ]]; then
-        graph_gen=$graph_gen"\"Header Graph\" -> ""\"$1\""";\n"
-    else
-        graph_gen=$graph_gen"\"$2\""" -> ""\"$1\""";\n"
-    fi
 }
 
 get_headers() {
